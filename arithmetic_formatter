@@ -1,0 +1,44 @@
+import re
+
+
+def arithmetic_formatter(inputs, display=False):
+    if len(inputs) > 5:
+        return "Too many problems"
+# Test the length of the input before proceeding
+        al, bl, cl, dl = [], [], [], []
+
+        for i in inputs:
+            match = re.match(r'([0-9]+)\s*([-+])\s*([0-9]+)', i)
+# Use regex to match the numbers and operators and then assign them to variables.
+            if match:
+                a, operator, b = match.groups()
+
+                a, b = int(a), int(b)
+
+                if operator == '+':
+                    c = a + b
+                elif operator == '-':
+                    c = a - b
+                else: 
+                    raise ValueError("Operator must be '+', '-'")
+# If operators are not either '+' or '-'
+                max_abc = max(len(str(a)), len(str(b)), len(str(c)))
+
+                al.append(f'{a:>{max_abc + 2}}') # append and give the proper spacing for each line of operands, operators, dash(equality) and result
+                bl.append(f'{operator:>1} {b:>{max_abc}}')
+                cl.append(f'{"" * max_abc}{c:>{max_abc + 2}}')
+                dl.append(f'{"_" * (max_abc + 2)}')
+
+            else:
+                return f"Invalid expression: {i}"
+# join the lists and return it as a string
+        formatted_inputs = []
+
+        if True:
+            for a, b, d, c in zip(al, bl, dl, cl):
+                formatted_inputs.append(f"{a}    {b}    {d}    {c}")
+            return "\n".join(formatted_inputs)
+        else:
+            for a, b, d, _ in zip(al, bl, dl, cl):
+                formatted_inputs.append(f"{a}    {b}    {d} ")
+            return "\n".join(formatted_inputs)
